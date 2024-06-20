@@ -1,0 +1,25 @@
+name: Build React Application
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Docker Login
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.AZURE_ACR_NAME}}
+          username: ${{ secrets.AZURE_ACR_USERNAME}}
+          password: ${{ secrets.AZURE_ACR_PASSWORD}}
+
+      - name: Build the image
+        run: |
+          docker build -t ${{ secrets.AZURE_ACR_NAME}}/reactcustomvoiceapp:latest .
+
+      - name: Push the image to ACR
+        run: |
+          docker push ${{ secrets.AZURE_ACR_NAME}}/reactcustomvoiceapp:latest
