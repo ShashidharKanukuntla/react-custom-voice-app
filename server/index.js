@@ -35,7 +35,7 @@ app.get('/api/get-speech-token', async (req, res, next) => {
 app.post('/api/analyzetext', express.json(), async (req, res, next) => {
     console.log('body; ', req.body);
     try {
-        const resp = await axios.get(`http://127.0.0.1:5000/api/${req.body.text}`);
+        const resp = await axios.get(`https://mycustom-voicecommand-flaskapp.azurewebsites.net/api/${req.body.text}`);
         console.log('resp: ', resp.data);
         res.send({resp: resp.data});
         // res.send({msg: "Pass"});
